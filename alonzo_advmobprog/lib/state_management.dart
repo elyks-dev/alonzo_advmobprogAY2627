@@ -1,106 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// provider is used by pages; keep imports there.
 
 /// Stores the application's shared theme state.
 class ThemeModel with ChangeNotifier {
+  static const _prefKey = 'isDarkMode';
   bool _isDark = false;
+
+  ThemeModel() {
+    _loadFromPrefs();
+  }
 
   /// Returns whether dark mode is enabled.
   bool get isDark => _isDark;
 
+  Future<void> _loadFromPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    _isDark = prefs.getBool(_prefKey) ?? false;
+    notifyListeners();
+  }
+
+  Future<void> _saveToPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_prefKey, _isDark);
+  }
+
   /// Toggles between light and dark themes.
   void toggleTheme() {
     _isDark = !_isDark;
+    _saveToPrefs();
     notifyListeners();
-  }
-}
-
-/// Demonstrates Ephemeral State using setState().
-class EphemeralPage extends StatefulWidget {
-  const EphemeralPage({super.key});
-
-  @override
-  State<EphemeralPage> createState() => _EphemeralPageState();
-}
-
-class _EphemeralPageState extends State<EphemeralPage> {
-  int _counter = 0;
-
-  /// Increments the counter.
-  void incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Ephemeral State"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "You have pushed the button this many times:",
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "$_counter",
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: incrementCounter,
-        tooltip: "Increment",
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-/// Demonstrates App State using Provider.
-class AppStatePage extends StatelessWidget {
-  const AppStatePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final themeModel = Provider.of<ThemeModel>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("App State"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Card(
-          margin: const EdgeInsets.all(20),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SwitchListTile(
-              title: const Text(
-                "Enable Dark Mode",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: const Text(
-                "This changes the theme of the entire application using Provider.",
-              ),
-              secondary: const Icon(Icons.dark_mode),
-              value: themeModel.isDark,
-              onChanged: (value) {
-                themeModel.toggleTheme();
-              },
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
