@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../lib/state_management.dart';
+import '../lib/providers/theme_provider.dart';
 
 void main() {
   test('ThemeModel persists preference', () async {

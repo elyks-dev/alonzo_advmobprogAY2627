@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'state_management.dart';
+import 'providers/theme_provider.dart';
 import 'screens/home_screen.dart';
 
 /// Entry point of the application.
@@ -21,7 +21,10 @@ Future<void> main() async {
         appBar: AppBar(title: const Text('Error')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          child: Text(details.exceptionAsString(), style: const TextStyle(color: Colors.red)),
+          child: Text(
+            details.exceptionAsString(),
+            style: const TextStyle(color: Colors.red),
+          ),
         ),
       ),
     );
@@ -31,7 +34,7 @@ Future<void> main() async {
   // missing or cannot be read. This prevents a white-screen failure when the
   // app cannot find the env file at startup
   try {
-    await dotenv.load();
+    await dotenv.load(fileName: 'assets/.env');
   } catch (e) {
     // Log the error to console; the ErrorWidget above will display runtime
     // exceptions if this causes downstream failures.
@@ -89,12 +92,18 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: Colors.grey[100],
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
             ),
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo, brightness: Brightness.dark),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.indigo,
+              brightness: Brightness.dark,
+            ),
             fontFamily: 'Poppins',
             appBarTheme: const AppBarTheme(
               elevation: 0,

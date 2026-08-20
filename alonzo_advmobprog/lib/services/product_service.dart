@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
-import '../models/product_model.dart';
+import '../models/product.dart';
 
 class ProductService {
   final String _baseHost;
@@ -11,12 +11,15 @@ class ProductService {
 
   Future<List<Product>> getAllProducts() async {
     try {
-      final response = await http.get(Uri.parse('$_baseHost/products')).timeout(const Duration(seconds: 8));
+      final response = await http
+          .get(Uri.parse('$_baseHost/products'))
+          .timeout(const Duration(seconds: 8));
 
       if (response.statusCode == 200) {
         final dynamic decoded = jsonDecode(response.body);
         if (decoded is Map<String, dynamic>) {
-          final List productsJson = decoded['products'] ?? decoded['data'] ?? [];
+          final List productsJson =
+              decoded['products'] ?? decoded['data'] ?? [];
           return productsJson
               .map((json) => Product.fromJson(json as Map<String, dynamic>))
               .toList();
@@ -30,17 +33,43 @@ class ProductService {
       Product(
         id: '1',
         title: 'Sample Product',
-        description: 'A fallback product shown when the network is unavailable.',
+        description:
+            'A fallback product shown when the network is unavailable.',
         price: 19.99,
-        image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80',
+        image:
+            'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80',
       ),
       Product(
         id: '2',
         title: 'Starter Bundle',
         description: 'A second example product so the grid is populated.',
         price: 29.5,
-        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
+        image:
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
       ),
     ];
+  }
+
+  Future<Product> getProductById(int productId) async {
+    try {
+      final response = await http
+          .get(Uri.parse('$_baseHost/products/$productId'))
+          .timeout(const Duration(seconds: 8));
+
+      if (response.statusCode == 200) {
+        final decoded = jsonDecode(response.body);
+        if (decoded is Map<String, dynamic>) {
+          return Product.fromJson(decoded);
+        }
+      }
+    } catch (_) {
+      // Fall back to the loaded catalog when the detail request fails.
+    }
+
+    final products = await getAllProducts();
+    return products.firstWhere(
+      (product) => product.id == productId.toString(),
+      orElse: () => throw Exception('Product $productId was not found'),
+    );
   }
 }
