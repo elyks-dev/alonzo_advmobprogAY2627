@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'providers/theme_provider.dart';
+import 'providers/auth_provider.dart';
+import 'screens/sign_screen.dart';
+import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
 
 /// Entry point of the application.
@@ -41,8 +44,11 @@ Future<void> main() async {
     print('dotenv.load() failed: $e');
   }
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeModel(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeModel()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -132,9 +138,31 @@ class MyApp extends StatelessWidget {
             ),
           ),
           themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
-          home: const HomeScreen(),
+          home: const _AuthGate(),
         );
       },
     );
+  }
+}
+
+class _AuthGate extends StatelessWidget {
+  const _AuthGate();
+
+  @override
+  Widget build(BuildContext context) {
+    final auth = context.watch<AuthProvider>();
+    switch (auth.status) {
+      case AuthStatus.checking:
+        // Enhancement 1: SplashScreen waits for the persisted session check.
+        return const SplashScreen();
+      case AuthStatus.authenticating:
+        // Enhancement 1: Keep the visible splash page open while login loads.
+        return const SplashScreen(message: 'Signing you in...');
+      case AuthStatus.signedOut:
+        // Enhancement 2: SignScreen owns the user-service login form.
+        return const SignScreen();
+      case AuthStatus.signedIn:
+        return HomeScreen(user: auth.user!);
+    }
   }
 }

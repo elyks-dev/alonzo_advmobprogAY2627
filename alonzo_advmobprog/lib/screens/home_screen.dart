@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'product_screen.dart';
 import 'cart_screen.dart';
 import 'settings_screen.dart';
+import '../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.user});
+
+  final User user;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -23,7 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
       // Keep each tab alive so cart changes remain visible when switching tabs.
       body: IndexedStack(
         index: _selectedIndex,
-        children: const [ProductScreen(), CartScreen(), ProfileScreen()],
+        children: [
+          const ProductScreen(),
+          // Enhancement 3: Use the authenticated user's ID for the cart.
+          CartScreen(userId: widget.user.id),
+          ProfileScreen(user: widget.user),
+        ],
       ),
       // Enhancement 2: Chat is an action FAB and is hidden while Cart is active.
       floatingActionButton: _selectedIndex == 1

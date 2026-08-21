@@ -7,7 +7,7 @@ import '../widgets/custom_text.dart';
 import 'detail_screen.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key, this.userId = 6});
+  const CartScreen({super.key, required this.userId});
 
   final int userId;
 
@@ -35,6 +35,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<void> _loadCart() async {
+    // Enhancement 3: Render the cart belonging to the saved authenticated user.
     setState(() {
       _loading = true;
       _error = null;
