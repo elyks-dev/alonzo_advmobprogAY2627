@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/product.dart';
-import '../services/cart_service.dart';
+import '../providers/auth_provider.dart';
+import '../providers/cart_provider.dart';
 import '../widgets/custom_text.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -19,34 +21,29 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  final CartService _cartService = CartService();
   int _quantity = 1;
   bool _adding = false;
-
-  @override
-  void dispose() {
-    _cartService.dispose();
-    super.dispose();
-  }
 
   Future<void> _addToCart() async {
     setState(() => _adding = true);
     try {
-      // Enhancement 3: Add the selected product and quantity to the API cart.
-      await _cartService.addToCart(
-        userId: widget.userId,
-        productId: int.parse(widget.product.id),
-        quantity: _quantity,
-      );
+      final userId = context.read<AuthProvider>().user?.id ?? widget.userId;
+      final cartProvider = context.read<CartProvider>();
+      cartProvider.loadCart(userId);
+
+      for (var i = 0; i < _quantity; i++) {
+        await cartProvider.addProduct(widget.product);
+      }
+
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Product added to cart')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Product added to cart!')),
+      );
     } catch (error) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Unable to add product: $error')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Unable to add product: $error')),
+      );
     } finally {
       if (mounted) setState(() => _adding = false);
     }

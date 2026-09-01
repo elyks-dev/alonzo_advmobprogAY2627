@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import '../lib/models/cart.dart';
+import '../lib/models/product.dart';
+import '../lib/providers/cart_provider.dart';
 
 void main() {
   test('Cart parses cart totals and products', () {
@@ -29,5 +31,33 @@ void main() {
     expect(cart.totalQuantity, 2);
     expect(cart.products.single.toProduct().id, '1');
     expect(cart.products.single.toProduct().title, 'Phone');
+  });
+
+  test('CartProvider tracks local cart additions and quantity updates', () async {
+    final provider = CartProvider();
+    await provider.loadCart(7);
+
+    final product = Product(
+      id: '15',
+      title: 'Wireless Mouse',
+      description: 'Ergonomic mouse',
+      price: 24.99,
+      image: 'https://example.com/mouse.png',
+    );
+
+    await provider.addProduct(product);
+    expect(provider.products.length, 1);
+    expect(provider.totalQuantity, 1);
+    expect(provider.cart?.products.single.quantity, 1);
+
+    provider.changeQuantity(provider.products.first, 1);
+    expect(provider.totalQuantity, 2);
+
+    provider.changeQuantity(provider.products.first, -1);
+    expect(provider.totalQuantity, 1);
+
+    provider.changeQuantity(provider.products.first, -1);
+    expect(provider.products, isEmpty);
+    expect(provider.total, 0.0);
   });
 }

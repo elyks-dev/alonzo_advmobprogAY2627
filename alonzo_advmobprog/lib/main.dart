@@ -7,6 +7,7 @@ import 'providers/auth_provider.dart';
 import 'screens/sign_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
+import 'providers/cart_provider.dart';
 
 /// Entry point of the application.
 Future<void> main() async {
@@ -46,9 +47,10 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeModel()),
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
+      ChangeNotifierProvider(create: (_) => ThemeModel()),
+      ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ChangeNotifierProvider(create: (_) => CartProvider()),
+    ],
       child: const MyApp(),
     ),
   );

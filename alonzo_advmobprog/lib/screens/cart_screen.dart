@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/cart.dart';
-import '../services/cart_service.dart';
+import '../providers/cart_provider.dart';
 import '../services/product_service.dart';
 import '../widgets/custom_text.dart';
 import 'detail_screen.dart';
@@ -16,117 +17,10 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final CartService _service = CartService();
   final ProductService _productService = ProductService();
-  Cart? _cart;
-  String? _error;
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCart();
-  }
-
-  @override
-  void dispose() {
-    _service.dispose();
-    super.dispose();
-  }
-
-  Future<void> _loadCart() async {
-    // Enhancement 3: Render the cart belonging to the saved authenticated user.
-    setState(() {
-      _loading = true;
-      _error = null;
-    });
-
-    try {
-      final carts = await _service.getCartsByUserId(widget.userId);
-      if (!mounted) return;
-      setState(() {
-        _cart = carts.isEmpty ? null : carts.first;
-        _loading = false;
-      });
-    } catch (error) {
-      if (!mounted) return;
-      setState(() {
-        _error = error.toString().replaceFirst('Exception: ', '');
-        _loading = false;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Cart · User ${widget.userId}')),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _error != null
-          ? _ErrorView(message: _error!, onRetry: _loadCart)
-          : _cart == null || _cart!.products.isEmpty
-          ? const Center(
-              child: CustomText(text: 'Your cart is empty', fontSize: 16),
-            )
-          : _CartContent(
-              cart: _cart!,
-              onQuantityChanged: _changeQuantity,
-              onProductTap: _openProductDetails,
-            ),
-      bottomNavigationBar:
-          !_loading &&
-              _error == null &&
-              _cart != null &&
-              _cart!.products.isNotEmpty
-          ? _CartSummary(cart: _cart!)
-          : null,
-    );
-  }
-
-  Future<void> _changeQuantity(CartProduct product, int change) async {
-    final cart = _cart;
-    if (cart == null) return;
-
-    final nextQuantity = product.quantity + change;
-    if (nextQuantity < 0) return;
-
-    final updatedProducts = cart.products
-        .where((item) => item.id != product.id || nextQuantity > 0)
-        .map((item) {
-          if (item.id != product.id) return item;
-          return item.copyWith(
-            quantity: nextQuantity,
-            total: item.price * nextQuantity,
-            discountedTotal: item.discountedPrice * nextQuantity,
-          );
-        })
-        .toList();
-    final updatedCart = _cartWithCalculatedTotals(cart, updatedProducts);
-
-    setState(() => _cart = updatedCart);
-    try {
-      // Enhancement 1: Quantity controls update the same cart endpoint from
-      // inside cart_screen; decreasing quantity 1 removes the whole item.
-      await _service.updateCart(
-        cartId: cart.id,
-        products: updatedProducts
-            .map((item) => {'id': item.id, 'quantity': item.quantity})
-            .toList(),
-      );
-    } catch (error) {
-      if (!mounted) return;
-      setState(() => _cart = cart);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Unable to update cart: $error')));
-    }
-  }
 
   Future<void> _openProductDetails(CartProduct cartProduct) async {
     try {
-      // Enhancement 1: Load the complete product so Cart uses the same
-      // description shown by the Shop feed's detail screen.
       final product = await _productService.getProductById(cartProduct.id);
       if (!mounted) return;
       await Navigator.push(
@@ -143,16 +37,26 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  Cart _cartWithCalculatedTotals(Cart cart, List<CartProduct> products) {
-    return cart.copyWith(
-      products: products,
-      total: products.fold<double>(0, (sum, item) => sum + item.total),
-      discountedTotal: products.fold<double>(
-        0,
-        (sum, item) => sum + item.discountedTotal,
-      ),
-      totalProducts: products.length,
-      totalQuantity: products.fold<int>(0, (sum, item) => sum + item.quantity),
+  @override
+  Widget build(BuildContext context) {
+    final cartProvider = context.watch<CartProvider>();
+    final cart = cartProvider.cart;
+
+    return Scaffold(
+      appBar: AppBar(title: Text('Cart · User ${widget.userId}')),
+      body: cart == null || cart.products.isEmpty
+          ? const Center(
+              child: CustomText(text: 'Your cart is empty', fontSize: 16),
+            )
+          : _CartContent(
+              cart: cart,
+              onQuantityChanged: (product, change) {
+                cartProvider.changeQuantity(product, change);
+              },
+              onProductTap: _openProductDetails,
+            ),
+      bottomNavigationBar:
+          cart != null && cart.products.isNotEmpty ? _CartSummary(cart: cart) : null,
     );
   }
 }
@@ -165,8 +69,7 @@ class _CartContent extends StatelessWidget {
   });
 
   final Cart cart;
-  final Future<void> Function(CartProduct product, int change)
-  onQuantityChanged;
+  final void Function(CartProduct product, int change) onQuantityChanged;
   final Future<void> Function(CartProduct product) onProductTap;
 
   @override
@@ -282,8 +185,7 @@ class _CartItem extends StatelessWidget {
   });
 
   final CartProduct product;
-  final Future<void> Function(CartProduct product, int change)
-  onQuantityChanged;
+  final void Function(CartProduct product, int change) onQuantityChanged;
   final Future<void> Function(CartProduct product) onProductTap;
 
   @override
@@ -444,6 +346,7 @@ class _TotalRow extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _ErrorView extends StatelessWidget {
   const _ErrorView({required this.message, required this.onRetry});
 
