@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "928905323402",
+    "project_id": "advmobprog-firebase-85a76",
+    "storage_bucket": "advmobprog-firebase-85a76.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928905323402:android:4ebb39f45ecba5421ade73",
+        "android_client_info": {
+          "package_name": "com.example.alonzo_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAnfFHErypCtsaR7SMZchdOMDHF1tzyBE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

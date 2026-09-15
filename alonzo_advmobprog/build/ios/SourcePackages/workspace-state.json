@@ -1,9 +1,281 @@
 {
   "object" : {
     "artifacts" : [
+      {
+        "kind" : {
+          "xcframework" : {
 
+          }
+        },
+        "packageRef" : {
+          "identity" : "abseil-cpp-binary",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/abseil-cpp-binary.git",
+          "name" : "abseil"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/abseil-cpp-binary/absl/absl.xcframework",
+        "source" : {
+          "checksum" : "72d4a03d002a063c6c99e04d9c0310ca830dfb9f39deb9a74ba689d6c1d89ac9",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/bin/abseil/1.2024072200.0/rc0/absl.zip"
+        },
+        "targetName" : "absl"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "firebase-ios-sdk",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/firebase/firebase-ios-sdk",
+          "name" : "Firebase"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/firebase-ios-sdk/FirebaseAnalytics/FirebaseAnalytics.xcframework",
+        "source" : {
+          "checksum" : "3fcbbaff30b579e1ad374c2d4bddfe602f0e689cd54e768f19b125848a7b40d2",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/swiftpm/12.19.0/FirebaseAnalytics.zip"
+        },
+        "targetName" : "FirebaseAnalytics"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "firebase-ios-sdk",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/firebase/firebase-ios-sdk",
+          "name" : "Firebase"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/firebase-ios-sdk/FirebaseFirestoreInternal/FirebaseFirestoreInternal.xcframework",
+        "source" : {
+          "checksum" : "d1591c51943b0d68be5ca17c96c39e80ecac170a5e803c1c9d46e2d945d004d7",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/bin/firestore/12.19.0/rc0/FirebaseFirestoreInternal.zip"
+        },
+        "targetName" : "FirebaseFirestoreInternal"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "google-ads-on-device-conversion-ios-sdk",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/googleads/google-ads-on-device-conversion-ios-sdk",
+          "name" : "GoogleAdsOnDeviceConversion"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/google-ads-on-device-conversion-ios-sdk/GoogleAdsOnDeviceConversion/GoogleAdsOnDeviceConversion.xcframework",
+        "source" : {
+          "checksum" : "d829c3a6461ce78ae178cfadc136d544152d3629b4034a7c10860e15a7b285f9",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/appads/3.7.0/GoogleAdsOnDeviceConversion.zip"
+        },
+        "targetName" : "GoogleAdsOnDeviceConversion"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "googleappmeasurement",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/GoogleAppMeasurement.git",
+          "name" : "GoogleAppMeasurement"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/googleappmeasurement/GoogleAppMeasurementIdentitySupport/GoogleAppMeasurementIdentitySupport.xcframework",
+        "source" : {
+          "checksum" : "48e36f76c4739f8c13aad6f85152469998a760466e6ede00f902759c760247f6",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/swiftpm/12.19.0/GoogleAppMeasurementIdentitySupport.zip"
+        },
+        "targetName" : "GoogleAppMeasurementIdentitySupport"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "googleappmeasurement",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/GoogleAppMeasurement.git",
+          "name" : "GoogleAppMeasurement"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/googleappmeasurement/GoogleAppMeasurement/GoogleAppMeasurement.xcframework",
+        "source" : {
+          "checksum" : "123336a4b841dce98bc6201aa814bd0e4ed203ccce197ca55e131b5bcc721c85",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/swiftpm/12.19.0/GoogleAppMeasurement.zip"
+        },
+        "targetName" : "GoogleAppMeasurement"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "grpc-binary",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/grpc-binary.git",
+          "name" : "gRPC"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/grpc-binary/grpc/grpc.xcframework",
+        "source" : {
+          "checksum" : "61bb6e29798cdc6898d7fcdf2d6a5e5191524dea4ece59d582329a1a56ebbfb3",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/bin/grpc/1.69.1/rc0/grpc.zip"
+        },
+        "targetName" : "grpc"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "grpc-binary",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/grpc-binary.git",
+          "name" : "gRPC"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/grpc-binary/openssl_grpc/openssl_grpc.xcframework",
+        "source" : {
+          "checksum" : "52494719d0dda77fa9a65c62207f22814c7799d522b4ae73d1244dbe61cf2b89",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/bin/grpc/1.69.1/rc0/openssl_grpc.zip"
+        },
+        "targetName" : "openssl_grpc"
+      },
+      {
+        "kind" : {
+          "xcframework" : {
+
+          }
+        },
+        "packageRef" : {
+          "identity" : "grpc-binary",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/grpc-binary.git",
+          "name" : "gRPC"
+        },
+        "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/build/ios/SourcePackages/artifacts/grpc-binary/grpcpp/grpcpp.xcframework",
+        "source" : {
+          "checksum" : "c965a70fc06c1323d631d909168ba801fb783df964e3625ca922250dd625b197",
+          "type" : "remote",
+          "url" : "https://dl.google.com/firebase/ios/bin/grpc/1.69.1/rc0/grpcpp.zip"
+        },
+        "targetName" : "grpcpp"
+      }
     ],
     "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "abseil-cpp-binary",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/abseil-cpp-binary.git",
+          "name" : "abseil"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "bbe8b69694d7873315fd3a4ad41efe043e1c07c5",
+            "version" : "1.2024072200.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "abseil-cpp-binary"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "app-check",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/app-check.git",
+          "name" : "AppCheck"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "97f7d74dd0e8f3d0fe5fc75cc8957aa73bdc948a",
+            "version" : "11.3.2"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "app-check"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "cloud_firestore-6.10.0",
+          "kind" : "fileSystem",
+          "location" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/cloud_firestore-6.10.0",
+          "name" : "cloud_firestore"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/cloud_firestore-6.10.0"
+        },
+        "subpath" : "cloud_firestore-6.10.0"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "firebase-ios-sdk",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/firebase/firebase-ios-sdk",
+          "name" : "Firebase"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "27eaab3918e0bf78711cf1abf240577176326432",
+            "version" : "12.19.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "firebase-ios-sdk"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "firebase_auth-6.7.0",
+          "kind" : "fileSystem",
+          "location" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/firebase_auth-6.7.0",
+          "name" : "firebase_auth"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/firebase_auth-6.7.0"
+        },
+        "subpath" : "firebase_auth-6.7.0"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "firebase_core-4.15.0",
+          "kind" : "fileSystem",
+          "location" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/firebase_core-4.15.0",
+          "name" : "firebase_core"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/firebase_core-4.15.0"
+        },
+        "subpath" : "firebase_core-4.15.0"
+      },
       {
         "basedOn" : null,
         "packageRef" : {
@@ -21,16 +293,186 @@
       {
         "basedOn" : null,
         "packageRef" : {
-          "identity" : "shared_preferences_foundation-2.5.6",
+          "identity" : "google-ads-on-device-conversion-ios-sdk",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/googleads/google-ads-on-device-conversion-ios-sdk",
+          "name" : "GoogleAdsOnDeviceConversion"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "0208e2681ec81f8a9c81084696f60fcce26cb7ee",
+            "version" : "3.7.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "google-ads-on-device-conversion-ios-sdk"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "googleappmeasurement",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/GoogleAppMeasurement.git",
+          "name" : "GoogleAppMeasurement"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "8fe40b69bd53241847814422101188465f7ff728",
+            "version" : "12.19.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "GoogleAppMeasurement"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "googledatatransport",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/GoogleDataTransport.git",
+          "name" : "GoogleDataTransport"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "ba3358d3c3dbae8ef230b58a46b97ad65e84e974",
+            "version" : "10.1.1"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "GoogleDataTransport"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "googleutilities",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/GoogleUtilities.git",
+          "name" : "GoogleUtilities"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "92c8f6dc3ac375d6febdfcb3db68bc3d10633db3",
+            "version" : "8.1.3"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "GoogleUtilities"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "grpc-binary",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/grpc-binary.git",
+          "name" : "gRPC"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "75b31c842f664a0f46a2e590a570e370249fd8f6",
+            "version" : "1.69.1"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "grpc-binary"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "gtm-session-fetcher",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/gtm-session-fetcher.git",
+          "name" : "GTMSessionFetcher"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "724a52eea6329b7e12d3ad8300d76ca9f3895fcc",
+            "version" : "5.3.1"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "gtm-session-fetcher"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "interop-ios-for-google-sdks",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/interop-ios-for-google-sdks.git",
+          "name" : "InteropForGoogle"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "040d087ac2267d2ddd4cca36c757d1c6a05fdbfe",
+            "version" : "101.0.0"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "interop-ios-for-google-sdks"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "leveldb",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/firebase/leveldb.git",
+          "name" : "leveldb"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "a0bc79961d7be727d258d33d5a6b2f1023270ba1",
+            "version" : "1.22.5"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "leveldb"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "nanopb",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/firebase/nanopb.git",
+          "name" : "nanopb"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "3851d94a41890dea16dc3db34caf60e585cb4163",
+            "version" : "2.30910.1"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "nanopb"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "promises",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/google/promises.git",
+          "name" : "Promises"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "f4a19a3c313dc2616c70bb49d29a799fb16be837",
+            "version" : "2.4.1"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "promises"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "shared_preferences_foundation-2.5.7",
           "kind" : "fileSystem",
-          "location" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/shared_preferences_foundation-2.5.6",
+          "location" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/shared_preferences_foundation-2.5.7",
           "name" : "shared_preferences_foundation"
         },
         "state" : {
           "name" : "fileSystem",
-          "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/shared_preferences_foundation-2.5.6"
+          "path" : "/Users/withers/Desktop/NU DEV FILES/alonzo_advmobprogAY2627/alonzo_advmobprog/ios/Flutter/ephemeral/Packages/.packages/shared_preferences_foundation-2.5.7"
         },
-        "subpath" : "shared_preferences_foundation-2.5.6"
+        "subpath" : "shared_preferences_foundation-2.5.7"
       }
     ],
     "prebuilts" : [

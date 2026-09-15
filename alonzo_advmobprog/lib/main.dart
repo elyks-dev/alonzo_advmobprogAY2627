@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'firebase_options.dart';
 import 'providers/theme_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/cart_provider.dart';
+
 import 'screens/sign_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/home_screen.dart';
-import 'providers/cart_provider.dart';
 
 /// Entry point of the application.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Development helpers: show runtime errors onscreen instead of a white
-  // screen so we can diagnose crashes more easily during development.
+
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Development helpers: show runtime errors onscreen instead of a white screen.
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.presentError(details);
   };
@@ -34,23 +42,20 @@ Future<void> main() async {
     );
   };
 
-  // Load environment variables but don't crash the app if the `.env` file is
-  // missing or cannot be read. This prevents a white-screen failure when the
-  // app cannot find the env file at startup
+  // Load environment variables safely.
   try {
     await dotenv.load(fileName: 'assets/.env');
   } catch (e) {
-    // Log the error to console; the ErrorWidget above will display runtime
-    // exceptions if this causes downstream failures.
-    print('dotenv.load() failed: $e');
+    debugPrint('dotenv.load() failed: $e');
   }
+
   runApp(
     MultiProvider(
       providers: [
-      ChangeNotifierProvider(create: (_) => ThemeModel()),
-      ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ChangeNotifierProvider(create: (_) => CartProvider()),
-    ],
+        ChangeNotifierProvider(create: (_) => ThemeModel()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -67,10 +72,12 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'State Management',
+
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
             fontFamily: 'Poppins',
+
             textTheme: const TextTheme(
               displayLarge: TextStyle(fontWeight: FontWeight.w700),
               displayMedium: TextStyle(fontWeight: FontWeight.w600),
@@ -80,7 +87,9 @@ class MyApp extends StatelessWidget {
               bodyMedium: TextStyle(fontWeight: FontWeight.w300),
               labelLarge: TextStyle(fontWeight: FontWeight.w500),
             ),
+
             scaffoldBackgroundColor: Colors.grey[50],
+
             appBarTheme: const AppBarTheme(
               elevation: 0,
               centerTitle: false,
@@ -97,6 +106,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: Colors.grey[100],
@@ -106,6 +116,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
+
           darkTheme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
@@ -113,6 +124,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.dark,
             ),
             fontFamily: 'Poppins',
+
             appBarTheme: const AppBarTheme(
               elevation: 0,
               centerTitle: false,
@@ -129,6 +141,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+
             textTheme: const TextTheme(
               displayLarge: TextStyle(fontWeight: FontWeight.w700),
               displayMedium: TextStyle(fontWeight: FontWeight.w600),
@@ -139,6 +152,7 @@ class MyApp extends StatelessWidget {
               labelLarge: TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
+
           themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
           home: const _AuthGate(),
         );
@@ -153,16 +167,20 @@ class _AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
+
     switch (auth.status) {
       case AuthStatus.checking:
         // Enhancement 1: SplashScreen waits for the persisted session check.
         return const SplashScreen();
+
       case AuthStatus.authenticating:
         // Enhancement 1: Keep the visible splash page open while login loads.
         return const SplashScreen(message: 'Signing you in...');
+
       case AuthStatus.signedOut:
         // Enhancement 2: SignScreen owns the user-service login form.
         return const SignScreen();
+
       case AuthStatus.signedIn:
         return HomeScreen(user: auth.user!);
     }
