@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../lib/main.dart';
 import '../lib/models/user.dart';
 import '../lib/providers/auth_provider.dart';
+import '../lib/providers/cart_provider.dart';
 import '../lib/providers/theme_provider.dart';
 
 void main() {
@@ -32,6 +33,7 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (_) => ThemeModel()),
           ChangeNotifierProvider(create: (_) => AuthProvider()),
+          ChangeNotifierProvider(create: (_) => CartProvider()),
         ],
         child: const MyApp(),
       ),

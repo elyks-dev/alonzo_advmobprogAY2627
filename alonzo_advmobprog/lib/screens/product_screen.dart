@@ -47,12 +47,16 @@ class _ProductScreenState extends State<ProductScreen> {
     try {
       final list = await _service.getAllProducts();
 
+      if (!mounted) return;
+
       setState(() {
         _products = list;
         _filtered = list;
         _loading = false;
       });
     } catch (_) {
+      if (!mounted) return;
+
       setState(() {
         _products = [];
         _filtered = [];
@@ -67,27 +71,6 @@ class _ProductScreenState extends State<ProductScreen> {
           .where((p) => p.title.toLowerCase().contains(q.toLowerCase()))
           .toList();
     });
-  }
-
-  Future<void> _addToCart(Product product) async {
-    try {
-      await context.read<CartProvider>().addProduct(product);
-
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Product added to cart!'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add to cart: $e')),
-      );
-    }
   }
 
   @override

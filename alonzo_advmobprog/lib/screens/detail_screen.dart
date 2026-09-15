@@ -29,7 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     try {
       final userId = context.read<AuthProvider>().user?.id ?? widget.userId;
       final cartProvider = context.read<CartProvider>();
-      cartProvider.loadCart(userId);
+      await cartProvider.loadCart(userId);
 
       for (var i = 0; i < _quantity; i++) {
         await cartProvider.addProduct(widget.product);
