@@ -14,3 +14,6 @@ This activity showed how the app is organized into layers. The environment file 
 
 # Lab Activity 3: Discussion
 This activity added the cart feature using the same pattern as the product feature. The cart model stores product data and totals, the cart service handles API requests, and the cart screen shows the user’s items. The app can load one user’s cart and also let the user tap a product to open the detail page. This keeps the cart logic organized and makes it easier to update quantities and totals.
+
+# Lab Activity 4: Discussion
+This activity adds authentication to the shopping app using DummyJSON, Provider, and SharedPreferences. UserService handles login, session storage, and logout, while AuthProvider manages the app’s authentication state through ChangeNotifier. The app uses an authentication gate in main.dart to display the Splash, Sign In, or Home screen based on the user’s login status. After a successful login, the authenticated user’s ID is used to load the correct cart and profile information, and signing out clears the saved session and returns the user to the login screen.
