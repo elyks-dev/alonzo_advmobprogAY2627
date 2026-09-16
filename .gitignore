@@ -1,3 +1,7 @@
+# Flutter app build output
+alonzo_advmobprog/build/
+alonzo_advmobprog/**/SourcePackages/
+
 # Miscellaneous
 *.class
 *.log
