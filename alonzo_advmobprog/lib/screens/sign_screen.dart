@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
+import 'signup_screen.dart';
 
 class SignScreen extends StatefulWidget {
   const SignScreen({super.key});
@@ -17,6 +18,20 @@ class _SignScreenState extends State<SignScreen> {
   bool _obscurePassword = true;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final notice = context.read<AuthProvider>().takeNotice();
+      if (notice != null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(notice)));
+      }
+    });
+  }
+
+  @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
@@ -25,7 +40,7 @@ class _SignScreenState extends State<SignScreen> {
 
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) return;
-    // Enhancement 2: Submit the sign-in UI through AuthProvider and UserService.
+    // Enhancement 2: Submit email/password through Firebase Auth.
     final auth = context.read<AuthProvider>();
     final success = await auth.signIn(
       _usernameController.text.trim(),
@@ -77,12 +92,12 @@ class _SignScreenState extends State<SignScreen> {
                               controller: _usernameController,
                               textInputAction: TextInputAction.next,
                               decoration: const InputDecoration(
-                                labelText: 'Username',
-                                prefixIcon: Icon(Icons.person_outline),
+                                labelText: 'Email',
+                                prefixIcon: Icon(Icons.email_outlined),
                               ),
                               validator: (value) =>
                                   value == null || value.trim().isEmpty
-                                  ? 'Enter your username'
+                                  ? 'Enter your email'
                                   : null,
                             ),
                             const SizedBox(height: 18),
@@ -110,6 +125,40 @@ class _SignScreenState extends State<SignScreen> {
                                   : null,
                             ),
                             const SizedBox(height: 28),
+                            Center(
+                              child: TextButton(
+                                onPressed: () async {
+                                  final email = _usernameController.text.trim();
+                                  if (email.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Enter your email first'),
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                  final authProvider = context
+                                      .read<AuthProvider>();
+                                  final messenger = ScaffoldMessenger.of(
+                                    context,
+                                  );
+                                  final success = await authProvider
+                                      .sendPasswordResetEmail(email);
+                                  if (!mounted) return;
+                                  messenger.showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        success
+                                            ? 'If an account exists for this email, a password reset link was sent.'
+                                            : authProvider.error ??
+                                                  'Unable to send password reset email',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Forgot password?'),
+                              ),
+                            ),
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton(
@@ -123,6 +172,17 @@ class _SignScreenState extends State<SignScreen> {
                                         ),
                                       )
                                     : const Text('Sign in'),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Center(
+                              child: TextButton(
+                                onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => const SignupScreen(),
+                                  ),
+                                ),
+                                child: const Text('Create an account'),
                               ),
                             ),
                           ],
