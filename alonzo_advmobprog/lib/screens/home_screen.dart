@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'product_screen.dart';
 import 'cart_screen.dart';
 import 'settings_screen.dart';
+import 'chat_screen.dart';
 import '../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,9 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: _selectedIndex == 1
           ? null
           : FloatingActionButton(
-              onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Chat is coming soon')),
-              ),
+              // Floating Action Button Requirement
+              onPressed: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const ChatScreen())),
               tooltip: 'Open chat',
               child: const Icon(Icons.chat_bubble_outline),
             ),
