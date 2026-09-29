@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
@@ -7,26 +8,32 @@ import '../models/product.dart';
 class ProductService {
   final String _baseHost;
 
-  ProductService({String? baseHost}) : _baseHost = baseHost ?? host;
+  ProductService({String? baseHost})
+      : _baseHost = baseHost ?? host;
 
   Future<List<Product>> getAllProducts() async {
     try {
       final response = await http
-          .get(Uri.parse('$_baseHost/products'))
+          .get(
+            Uri.parse('$_baseHost/products?limit=100'),
+          )
           .timeout(const Duration(seconds: 8));
 
       if (response.statusCode == 200) {
         final dynamic decoded = jsonDecode(response.body);
+
         if (decoded is Map<String, dynamic>) {
-          final List productsJson =
+          final List<dynamic> productsJson =
               decoded['products'] ?? decoded['data'] ?? [];
+
           return productsJson
-              .map((json) => Product.fromJson(json as Map<String, dynamic>))
+              .whereType<Map<String, dynamic>>()
+              .map(Product.fromJson)
               .toList();
         }
       }
     } catch (_) {
-      // Fall back to a small local catalog when the network request fails.
+      // Use the local fallback catalog if the network request fails.
     }
 
     return [
@@ -42,8 +49,9 @@ class ProductService {
       Product(
         id: '2',
         title: 'Starter Bundle',
-        description: 'A second example product so the grid is populated.',
-        price: 29.5,
+        description:
+            'A second example product so the grid is populated.',
+        price: 29.50,
         image:
             'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80',
       ),
@@ -53,23 +61,29 @@ class ProductService {
   Future<Product> getProductById(int productId) async {
     try {
       final response = await http
-          .get(Uri.parse('$_baseHost/products/$productId'))
+          .get(
+            Uri.parse('$_baseHost/products/$productId'),
+          )
           .timeout(const Duration(seconds: 8));
 
       if (response.statusCode == 200) {
-        final decoded = jsonDecode(response.body);
+        final dynamic decoded = jsonDecode(response.body);
+
         if (decoded is Map<String, dynamic>) {
           return Product.fromJson(decoded);
         }
       }
     } catch (_) {
-      // Fall back to the loaded catalog when the detail request fails.
+      // Fall back to the loaded catalog.
     }
 
     final products = await getAllProducts();
+
     return products.firstWhere(
       (product) => product.id == productId.toString(),
-      orElse: () => throw Exception('Product $productId was not found'),
+      orElse: () => throw Exception(
+        'Product $productId was not found',
+      ),
     );
   }
 }

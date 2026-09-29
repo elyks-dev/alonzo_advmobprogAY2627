@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Enhancement 3: Chat Detail Screen - Redesign
+
 class MessageModel {
   const MessageModel({
     required this.senderId,
@@ -8,6 +9,7 @@ class MessageModel {
     required this.receiverId,
     required this.message,
     required this.timestamp,
+    this.seen = false,
   });
 
   final String senderId;
@@ -15,6 +17,7 @@ class MessageModel {
   final String receiverId;
   final String message;
   final Timestamp timestamp;
+  final bool seen;
 
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
@@ -25,6 +28,7 @@ class MessageModel {
       timestamp: map['timestamp'] is Timestamp
           ? map['timestamp'] as Timestamp
           : Timestamp.now(),
+      seen: map['seen'] == true,
     );
   }
 
@@ -35,6 +39,7 @@ class MessageModel {
       'receiverId': receiverId,
       'message': message,
       'timestamp': timestamp,
+      'seen': seen,
     };
   }
 }

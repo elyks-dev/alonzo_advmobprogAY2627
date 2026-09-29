@@ -44,7 +44,7 @@ Future<void> main() async {
 
   // Load environment variables safely.
   try {
-    await dotenv.load(fileName: 'assets/.env');
+    await dotenv.load(fileName: '.env');
   } catch (e) {
     debugPrint('dotenv.load() failed: $e');
   }

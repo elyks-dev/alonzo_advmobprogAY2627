@@ -20,3 +20,6 @@ This activity adds authentication to the shopping app using DummyJSON, Provider,
 
 # Lab Activity 5: Discussion
 The app uses UserService as the central authentication layer: Firebase handles sign-in, account creation, username updates, password changes, deletion, logout, password resets, session state, and profile retrieval, while DummyJSON remains a fallback for existing sample accounts. During signup, the user enters personal details, email, username, and a validated password; Firebase creates and manages the account. During login, Firebase is attempted first, then DummyJSON if Firebase fails. Firebase improves the app by providing secure authentication, persistent sessions, reauthentication for sensitive actions, password recovery, and managed account security, while the service keeps these operations organized in one reusable class.
+
+# Lab Activity 6: Discussion
+The Firestore user structure stores each registered user in the Users collection using their unique Firebase UID. When a chat is initiated, the system uses the UIDs of the two users to create a unique chat room under chat_rooms. The current logged-in user is excluded from the Chat List, so users cannot select themselves and initiate a chat with their own account. Therefore, self-chat is not allowed in the system.
